@@ -29,6 +29,3 @@ class CSV extends Files {
     return ( $this->data = $data );
   }
 }
-
-?>
-
