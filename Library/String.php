@@ -177,4 +177,12 @@ class Strings
     }                                                                                                                               
     return trim($ret);                                                                                                              
   }
+  /**                                                                                                                                  * Cuts string by input                                                                                                              * @param $word string the target string
+   * @param $length int length that you want to cut
+   * @return string
+   */
+  public static function cut($word,$length)                                                                                         
+  {                                                                                                                                 
+    return mb_strcut($word,0,$length);
+  }   
 }
