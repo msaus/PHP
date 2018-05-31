@@ -154,5 +154,28 @@ class String
       
     }
   }
+  
+  /**                                                                                                                                                                                       
+   * Replaces duplicate break new lines and trims strings                                                                                                                                   
+   * @param string                                                                                                                                                                          
+   * @return                                                                                                                                                                                
+   */                                                                                                                                                                                       
+  public static function textTrimer(string $string)                                                                                                                                         
+  {                                                                                                                                                                                         
+    $string = preg_replace("/\r\n|\r|\n/", "\n", $string);                                                                              $string = array_filter(explode("\n",$string),                                                                                                                                           
+      function($val)                                                                                                                
+      {                                                                                                                             
+        $val = trim($val);// Delete whilespaces before and after the character                                                      
+        if(strlen($val) <= 1 || empty($val) || $val == false || $val == '' || is_null($val) || $val == ' ' || $val == '　')         
+        {                                                                                                                           
+          return false;                                                                                                             
+        }                                                                                                                                   return true;                                                                                                                      }                                                                                                                             
+    );                                                                                                                              
+    $ret = '';                                                                                                                      
+    foreach($string as $s)                                                                                                          
+    {                                                                                                                               
+      $ret .= trim($s)."\n";                                                                                                        
+    }                                                                                                                               
+    return trim($ret);                                                                                                              
+  }
 }
-?>
