@@ -5,7 +5,7 @@
  * 
  * Created by Masao Soseki
  */
-class String
+class Strings
 {
   
   /**
