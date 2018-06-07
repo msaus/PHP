@@ -46,10 +46,15 @@ trait guzzelRetryDelay
 class guzzelRetry
 {
 	use guzzelRetryDecider,guzzelRetryDelay;
+	private static $client = null;
 	public static function getClient()
 	{
 		$handlerStack = HandlerStack::create( new CurlHandler() );
 		$handlerStack->push( Middleware::retry( self::retryDecider(), self::retryDelay() ) );
-		return ( new Client( array( 'handler' => $handlerStack ) ) );
+		if(self::$client === null)
+		{
+			self::$client = new Client(array( 'handler' => $handlerStack));
+		}
+		return self::$client;
 	}
 }
