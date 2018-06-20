@@ -4,15 +4,19 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\Middleware;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Psr7\Request as Psr7Request;
+use GuzzleHttp\Psr7\Response as Psr7Response; 
 
 traint guzzelRetryDecider
 {
 	static function retryDecider() {
 	   return function (
 	      int $retries,
-	      \GuzzleHttp\Psr7\Request $request,
-	      \GuzzleHttp\Psr7\Response $response = null,
-	      \GuzzleHttp\Psr7\RequestException $exception = null
+	      Psr7Request $request,
+	      Psr7Response $response = null,
+	      RequestException $exception = null
 	     ) {
 	        // Limit the number of retries to 5
 		if ( $retries >= 5 )
@@ -49,10 +53,10 @@ class guzzelRetry
 	private static $client = null;
 	public static function getClient()
 	{
-		$handlerStack = HandlerStack::create( new CurlHandler() );
-		$handlerStack->push( Middleware::retry( self::retryDecider(), self::retryDelay() ) );
 		if(self::$client === null)
 		{
+			$handlerStack = HandlerStack::create( new CurlHandler() );
+			$handlerStack->push( Middleware::retry( self::retryDecider(), self::retryDelay() ) );
 			self::$client = new Client(array( 'handler' => $handlerStack));
 		}
 		return self::$client;
