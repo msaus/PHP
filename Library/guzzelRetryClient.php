@@ -9,7 +9,7 @@ use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use GuzzleHttp\Psr7\Response as Psr7Response; 
 
-traint guzzelRetryDecider
+trait guzzelRetryDecider
 {
 	static function retryDecider() {
 	   return function (
